@@ -4,10 +4,11 @@ import (
 	. "github.com/cloudfoundry-community/gautocloud/cloudenv"
 
 	"bytes"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 	"os"
 	"path"
+
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
 var yamlServices = []byte(`
@@ -91,7 +92,6 @@ type FormatService struct {
 }
 
 func defaultTest(cloudEnv CloudEnv) {
-
 	Context("GetServicesFromTags", func() {
 		It("should give correct service(s)", func() {
 			services := cloudEnv.GetServicesFromTags([]string{"service"})
@@ -101,7 +101,7 @@ func defaultTest(cloudEnv CloudEnv) {
 			services := cloudEnv.GetServicesFromTags([]string{"postgres.*"})
 			Expect(services).Should(HaveLen(1))
 		})
-		It("should give correct service(s) when have mulitple tag", func() {
+		It("should give correct service(s) when have multiple tag", func() {
 			services := cloudEnv.GetServicesFromTags([]string{"postgresql", "smtp"})
 			Expect(services).Should(HaveLen(2))
 		})

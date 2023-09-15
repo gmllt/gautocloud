@@ -5,12 +5,12 @@ import (
 	"os"
 
 	"encoding/json"
-	"errors"
-	"github.com/satori/go.uuid"
-	"github.com/spf13/viper"
 	"io"
 	"path/filepath"
 	"reflect"
+
+	uuid "github.com/satori/go.uuid"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -48,7 +48,7 @@ func NewLocalCloudEnvFromReader(r io.Reader, configType string) CloudEnv {
 	return cloudEnv
 }
 func (c *LocalCloudEnv) Load() error {
-	if c.hasCloudFile() {
+	if c.HasCloudFile() {
 		err := c.loadCloudFile()
 		if err != nil {
 			return err
@@ -77,12 +77,12 @@ func (c *LocalCloudEnv) loadConfigFile() error {
 	viper.SetConfigFile(confPath)
 	err = viper.ReadInConfig()
 	if err != nil {
-		return errors.New(fmt.Sprintf("Fatal error on reading config file: %s \n", err.Error()))
+		return fmt.Errorf("Fatal error on reading config file: %s \n", err.Error())
 	}
 	var creds map[interface{}]interface{}
 	err = viper.Unmarshal(&creds)
 	if err != nil {
-		return errors.New(fmt.Sprintf("Fatal error when unmarshaling config file: %s \n", err.Error()))
+		return fmt.Errorf("Fatal error when unmarshaling config file: %s \n", err.Error())
 	}
 	finalCreds := c.convertMapInterface(creds).(map[string]interface{})
 	c.servicesLocal = append(c.servicesLocal, ServiceLocal{
@@ -97,7 +97,7 @@ func (c *LocalCloudEnv) loadCloudFile() error {
 	viper.SetConfigFile(os.Getenv(LOCAL_ENV_KEY))
 	err := viper.ReadInConfig()
 	if err != nil {
-		return errors.New(fmt.Sprintf("Fatal error on reading cloud file: %s \n", err.Error()))
+		return fmt.Errorf("Fatal error on reading cloud file: %s \n", err.Error())
 	}
 	services := viper.Get(SERVICES_CONFIG_KEY)
 	if services != nil {
@@ -225,10 +225,10 @@ func (c LocalCloudEnv) configPath() string {
 	return confPath
 }
 
-func (c LocalCloudEnv) hasConfigFile() bool {
+func (c LocalCloudEnv) HasConfigFile() bool {
 	return os.Getenv(LOCAL_CONFIG_ENV_KEY) != ""
 }
-func (c LocalCloudEnv) hasCloudFile() bool {
+func (c LocalCloudEnv) HasCloudFile() bool {
 	return os.Getenv(LOCAL_ENV_KEY) != ""
 }
 func (c LocalCloudEnv) IsInCloudEnv() bool {
@@ -246,5 +246,4 @@ func (c *LocalCloudEnv) GetAppInfo() AppInfo {
 		Port:       0,
 		Properties: make(map[string]interface{}),
 	}
-
 }

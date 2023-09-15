@@ -17,8 +17,8 @@ var _ = Describe("Raw", func() {
 		BeforeEach(func() {
 			connector = NewMongodbRawConnector()
 		})
-		It("Should return a MongodbDatabase struct when passing a MongoDbSchema without uri", func() {
-			data, err := connector.Load(schema.MongoDbSchema{
+		It("Should return a MongodbDatabase struct when passing a MongoDBSchema without uri", func() {
+			data, err := connector.Load(schema.MongoDBSchema{
 				Host:     "localhost",
 				Password: "pass",
 				User:     "user",
@@ -38,8 +38,8 @@ var _ = Describe("Raw", func() {
 				},
 			))
 		})
-		It("Should return a MongodbDatabase struct when passing a MongoDbSchema with an uri", func() {
-			data, err := connector.Load(schema.MongoDbSchema{
+		It("Should return a MongodbDatabase struct when passing a MongoDBSchema with an uri", func() {
+			data, err := connector.Load(schema.MongoDBSchema{
 				Uri: decoder.ServiceUri{
 					Host:     "localhost",
 					Name:     "db",

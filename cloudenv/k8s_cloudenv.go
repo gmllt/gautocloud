@@ -30,11 +30,9 @@ func (c KubernetesCloudEnv) Name() string {
 func (c KubernetesCloudEnv) SanitizeEnvVars(envVars []string) []string {
 	finalEnvVars := make([]string, 0)
 	for _, envVar := range envVars {
-
 		splitEnvVar := strings.Split(envVar, "=")
 		if splitEnvVar[0] == "KUBERNETES_PORT" {
 			finalEnvVars = append(finalEnvVars, "KUBERNETES_URI="+strings.Join(splitEnvVar[1:], "="))
-
 		}
 		splitEnvVar[0] = strings.Replace(splitEnvVar[0], "_SERVICE", "", -1)
 		finalEnvVars = append(finalEnvVars, strings.Join(splitEnvVar, "="))

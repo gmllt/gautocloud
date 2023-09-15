@@ -4,11 +4,12 @@ package urfave
 
 import (
 	"fmt"
+	"reflect"
+	"strings"
+
 	"github.com/cloudfoundry-community/gautocloud/decoder"
 	"github.com/cloudfoundry-community/gautocloud/interceptor"
 	"github.com/urfave/cli"
-	"reflect"
-	"strings"
 )
 
 type CliInterceptor struct {

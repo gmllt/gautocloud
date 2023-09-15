@@ -1,12 +1,13 @@
 package mongodb
 
 import (
+	"fmt"
+
+	"github.com/cloudfoundry-community/gautocloud"
 	"github.com/cloudfoundry-community/gautocloud/connectors"
+	"github.com/cloudfoundry-community/gautocloud/connectors/databases/dbtype"
 	"github.com/cloudfoundry-community/gautocloud/connectors/databases/raw"
 	"gopkg.in/mgo.v2"
-	"fmt"
-	"github.com/cloudfoundry-community/gautocloud"
-	"github.com/cloudfoundry-community/gautocloud/connectors/databases/dbtype"
 )
 
 func init() {
@@ -58,5 +59,3 @@ func (c MongodbConnector) Load(schema interface{}) (interface{}, error) {
 func (c MongodbConnector) Schema() interface{} {
 	return c.rawConn.Schema()
 }
-
-

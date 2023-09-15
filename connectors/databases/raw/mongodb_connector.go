@@ -21,7 +21,7 @@ func (c MongodbRawConnector) Tags() []string {
 	return []string{"mongo.*"}
 }
 func (c MongodbRawConnector) Load(schema interface{}) (interface{}, error) {
-	fSchema := schema.(MongoDbSchema)
+	fSchema := schema.(MongoDBSchema)
 	if fSchema.Uri.Host == "" {
 		return dbtype.MongodbDatabase{
 			User:     fSchema.User,
@@ -46,5 +46,5 @@ func (c MongodbRawConnector) Load(schema interface{}) (interface{}, error) {
 	}, nil
 }
 func (c MongodbRawConnector) Schema() interface{} {
-	return MongoDbSchema{}
+	return MongoDBSchema{}
 }

@@ -5,11 +5,12 @@ package arg
 
 import (
 	"fmt"
-	"github.com/alexflint/go-arg"
-	"github.com/cloudfoundry-community/gautocloud/interceptor"
 	"io"
 	"os"
 	"reflect"
+
+	"github.com/alexflint/go-arg"
+	"github.com/cloudfoundry-community/gautocloud/interceptor"
 )
 
 type ArgInterceptor struct {

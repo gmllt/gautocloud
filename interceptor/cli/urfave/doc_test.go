@@ -2,11 +2,12 @@ package urfave_test
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/cloudfoundry-community/gautocloud"
 	"github.com/cloudfoundry-community/gautocloud/connectors/generic"
 	. "github.com/cloudfoundry-community/gautocloud/interceptor/cli/urfave"
 	"github.com/urfave/cli"
-	"os"
 )
 
 func Example() {
@@ -19,9 +20,9 @@ func Example() {
 
 	// Initialize a fake cloud env only for example, normally you should do this in init() function
 	os.Clearenv()
-	os.Setenv("DYNO", "true")
+	_ = os.Setenv("DYNO", "true")
 	// Here we set a value for Orig field from MyConfig schema
-	os.Setenv("CONFIG_ORIG", "<injected by gautocloud>")
+	_ = os.Setenv("CONFIG_ORIG", "<injected by gautocloud>")
 	gautocloud.RegisterConnector(generic.NewConfigGenericConnector(MyConfig{}, cliInterceptor))
 	gautocloud.ReloadConnectors()
 	//////
@@ -67,7 +68,7 @@ func Example() {
 			Action: action,
 		},
 	}
-	app.Run([]string{"app", "--foo=bar", "doo", "--bar"})
+	_ = app.Run([]string{"app", "--foo=bar", "doo", "--bar"})
 
 	// Output: urfave_test.MyConfig{Foo:"bar", Bar:true, Orig:"<injected by gautocloud>"}
 }

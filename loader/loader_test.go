@@ -1,11 +1,14 @@
 package loader_test
 
 import (
-	. "github.com/cloudfoundry-community/gautocloud/loader"
 	"os"
+
+	. "github.com/cloudfoundry-community/gautocloud/loader"
 
 	"bytes"
 	"fmt"
+	"reflect"
+
 	"github.com/cloudfoundry-community/gautocloud/cloudenv"
 	fakecloud "github.com/cloudfoundry-community/gautocloud/cloudenv/fake"
 	"github.com/cloudfoundry-community/gautocloud/connectors"
@@ -15,18 +18,17 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	log "github.com/sirupsen/logrus"
-	"reflect"
 )
 
 type FakeSchema struct {
-	Uri      decoder.ServiceUri `cloud:"ur(i|l),regex"`
+	URI      decoder.ServiceUri `cloud:"ur(i|l),regex"`
 	Host     string             `cloud:"host.*,regex"`
 	Username string             `cloud:"user.*,regex"`
 	Password string             `cloud:"pass.*,regex"`
 	Port     int
 }
 type SecondFakeSchema struct {
-	Uri      decoder.ServiceUri `cloud:"ur(i|l),regex"`
+	URI      decoder.ServiceUri `cloud:"ur(i|l),regex"`
 	Host     string             `cloud:"host.*,regex"`
 	Username string             `cloud:"user.*,regex"`
 	Password string             `cloud:"pass.*,regex"`
@@ -48,8 +50,8 @@ var defaultServices []cloudenv.Service = []cloudenv.Service{
 		},
 	},
 }
-var srv1Expected FakeSchema = FakeSchema{
-	Uri: decoder.ServiceUri{
+var srv1Expected = FakeSchema{
+	URI: decoder.ServiceUri{
 		Scheme:   "postgres",
 		Username: "seilbmbd",
 		Password: "PHxTPJSbkcDakfK4cYwXHiIX9Q8p5Bxn",
@@ -59,7 +61,7 @@ var srv1Expected FakeSchema = FakeSchema{
 		Name:     "seilbmbd",
 	},
 }
-var srv2Expected FakeSchema = FakeSchema{
+var srv2Expected = FakeSchema{
 	Host:     "smtp.sendgrid.net",
 	Port:     25,
 	Username: "QvsXMbJ3rK",
@@ -259,7 +261,7 @@ var _ = Describe("Loader", func() {
 		})
 
 	})
-	Context("InjectFromId", func() {
+	Context("InjectFromID", func() {
 		var connector connectors.Connector
 		BeforeEach(func() {
 			connector = fakecon.NewFakeConnector(FakeSchema{})
@@ -268,7 +270,7 @@ var _ = Describe("Loader", func() {
 		Context("connector give a structure", func() {
 			It("should inject the correct content given by connector when asking structure", func() {
 				var data FakeSchema
-				err := loader.InjectFromId(connector.Id(), &data)
+				err := loader.InjectFromID(connector.Id(), &data)
 				Expect(err).ToNot(HaveOccurred())
 				Expect(data).Should(BeEquivalentTo(srv1Expected))
 			})
@@ -287,13 +289,13 @@ var _ = Describe("Loader", func() {
 			})
 			It("should inject the correct content given by connector when asking structure", func() {
 				var data *FakeSchema
-				err := loader.InjectFromId(connector.Id(), &data)
+				err := loader.InjectFromID(connector.Id(), &data)
 				Expect(err).ToNot(HaveOccurred())
 				Expect(data).Should(BeEquivalentTo(&srv1Expected))
 			})
 			It("should inject the correct content given by connector when asking slice of structure", func() {
 				var data []*FakeSchema
-				err := loader.InjectFromId(connector.Id(), &data)
+				err := loader.InjectFromID(connector.Id(), &data)
 				Expect(err).ToNot(HaveOccurred())
 				Expect(data).Should(BeEquivalentTo([]*FakeSchema{&srv1Expected, &srv2Expected}))
 			})
@@ -312,7 +314,7 @@ var _ = Describe("Loader", func() {
 				loader.RegisterConnector(fakeInterceptor)
 
 				var data FakeSchema
-				err := loader.InjectFromId(connector.Id(), &data)
+				err := loader.InjectFromID(connector.Id(), &data)
 
 				Expect(err).ToNot(HaveOccurred())
 				Expect(data.Host).Should(Equal("host.hijack.com"))
@@ -330,7 +332,7 @@ var _ = Describe("Loader", func() {
 				loader.RegisterConnector(fakeInterceptor)
 
 				var data []FakeSchema
-				err := loader.InjectFromId(connector.Id(), &data)
+				err := loader.InjectFromID(connector.Id(), &data)
 
 				Expect(err).ToNot(HaveOccurred())
 				Expect(data[0].Host).Should(Equal("host.hijack.com"))
@@ -347,7 +349,7 @@ var _ = Describe("Loader", func() {
 				loader.RegisterConnector(fakeInterceptor)
 
 				var data FakeSchema
-				err := loader.InjectFromId(connector.Id(), &data)
+				err := loader.InjectFromID(connector.Id(), &data)
 
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).Should(ContainSubstring("Error from intercepter"))
@@ -355,19 +357,19 @@ var _ = Describe("Loader", func() {
 		})
 		It("should return an error if content to inject is not a pointer", func() {
 			var data FakeSchema
-			err := loader.InjectFromId(connector.Id(), data)
+			err := loader.InjectFromID(connector.Id(), data)
 			Expect(err).Should(HaveOccurred())
 			Expect(err.Error()).Should(ContainSubstring("You must pass a pointer"))
 		})
 		It("should return an error if no connector exists with this id", func() {
 			var data FakeSchema
-			err := loader.InjectFromId("notavalidconnector", data)
+			err := loader.InjectFromID("notavalidconnector", data)
 			Expect(err).Should(HaveOccurred())
 			Expect(err.Error()).Should(ContainSubstring("not found"))
 		})
 		It("should return an error if no content with given type can be found", func() {
 			var data SecondFakeSchema
-			err := loader.InjectFromId(connector.Id(), &data)
+			err := loader.InjectFromID(connector.Id(), &data)
 			Expect(err).Should(HaveOccurred())
 			Expect(err.Error()).Should(ContainSubstring("Connector with id"))
 			Expect(err.Error()).Should(ContainSubstring("doesn't give a service with the type"))
@@ -376,7 +378,7 @@ var _ = Describe("Loader", func() {
 			fakeCloudEnv.(*fakecloud.FakeCloudEnv).SetServices(make([]cloudenv.Service, 0))
 			loader.ReloadConnectors()
 			var data FakeSchema
-			err := loader.InjectFromId(connector.Id(), &data)
+			err := loader.InjectFromID(connector.Id(), &data)
 			Expect(err).Should(HaveOccurred())
 			Expect(err.Error()).Should(ContainSubstring("Connector with id"))
 			Expect(err.Error()).Should(ContainSubstring("doesn't give a service with the type"))
@@ -398,7 +400,7 @@ var _ = Describe("Loader", func() {
 		})
 		AfterEach(func() {
 			log.SetLevel(currentLvl)
-			os.Unsetenv(DEBUG_MODE_ENV_VAR)
+			os.Unsetenv(DebugModeEnvVar)
 		})
 		It("should show debug log if env var set", func() {
 			log.SetLevel(log.WarnLevel)
@@ -407,7 +409,7 @@ var _ = Describe("Loader", func() {
 			fakeCloudEnv1 := fakecloud.NewFakeCloudEnv()
 			fakeCloudEnv1.(*fakecloud.FakeCloudEnv).SetInCloudEnv(true)
 
-			os.Setenv(DEBUG_MODE_ENV_VAR, "1")
+			os.Setenv(DebugModeEnvVar, "1")
 			loader = NewLoader([]cloudenv.CloudEnv{fakeCloudEnv, fakeCloudEnv1})
 
 			Expect(logBuf.String()).Should(ContainSubstring("Environment detected and loaded"))

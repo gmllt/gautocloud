@@ -2,11 +2,12 @@ package client
 
 import (
 	"fmt"
+
 	"github.com/cloudfoundry-community/gautocloud"
 	"github.com/cloudfoundry-community/gautocloud/connectors"
 	"github.com/cloudfoundry-community/gautocloud/connectors/amqp/amqptype"
 	"github.com/cloudfoundry-community/gautocloud/connectors/amqp/raw"
-	"github.com/streadway/amqp"
+	"github.com/rabbitmq/amqp091-go"
 )
 
 func init() {
@@ -44,7 +45,7 @@ func (c AmqpConnector) Load(schema interface{}) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return amqp.Dial(c.GetConnString(schema.(amqptype.Amqp)))
+	return amqp091.Dial(c.GetConnString(schema.(amqptype.Amqp)))
 }
 func (c AmqpConnector) Schema() interface{} {
 	return c.rawConn.Schema()

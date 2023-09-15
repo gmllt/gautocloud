@@ -1,8 +1,9 @@
 package fake
 
 import (
-	"github.com/cloudfoundry-community/gautocloud/connectors"
 	"reflect"
+
+	"github.com/cloudfoundry-community/gautocloud/connectors"
 )
 
 type FakePtrConnector struct {

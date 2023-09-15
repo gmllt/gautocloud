@@ -1,9 +1,10 @@
 package generic
 
 import (
+	"reflect"
+
 	"github.com/cloudfoundry-community/gautocloud/connectors"
 	"github.com/cloudfoundry-community/gautocloud/interceptor"
-	"reflect"
 )
 
 type SchemaBasedGenericConnector struct {

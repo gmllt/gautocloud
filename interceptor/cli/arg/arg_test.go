@@ -4,9 +4,10 @@ import (
 	. "github.com/cloudfoundry-community/gautocloud/interceptor/cli/arg"
 
 	"bytes"
+	"strings"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"strings"
 )
 
 type SchemaFake struct {

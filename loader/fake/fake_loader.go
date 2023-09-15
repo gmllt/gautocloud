@@ -1,11 +1,12 @@
 package fake
 
 import (
+	"log"
+
 	"github.com/cloudfoundry-community/gautocloud/cloudenv"
 	"github.com/cloudfoundry-community/gautocloud/connectors"
 	"github.com/cloudfoundry-community/gautocloud/loader"
 	"github.com/golang/mock/gomock"
-	"log"
 )
 
 // Mock of Loader interface
@@ -29,7 +30,6 @@ func (g MockTestReporter) Fatalf(format string, args ...interface{}) {
 	log.Fatalf("[FAIL GAUTOCLOUD MOCK LOADER] "+format, args...)
 }
 func NewMockLoader() *MockLoader {
-
 	mock := &MockLoader{ctrl: gomock.NewController(MockTestReporter{})}
 	mock.recorder = &_MockLoaderRecorder{mock}
 	return mock
@@ -100,7 +100,7 @@ func (_mr *_MockLoaderRecorder) GetAppInfo() *gomock.Call {
 
 func (_m *MockLoader) GetFirst(_param0 string) (interface{}, error) {
 	ret := _m.ctrl.Call(_m, "GetFirst", _param0)
-	ret0, _ := ret[0].(interface{})
+	ret0 := ret[0]
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -119,14 +119,14 @@ func (_mr *_MockLoaderRecorder) Inject(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Inject", arg0)
 }
 
-func (_m *MockLoader) InjectFromId(_param0 string, _param1 interface{}) error {
-	ret := _m.ctrl.Call(_m, "InjectFromId", _param0, _param1)
+func (_m *MockLoader) InjectFromID(_param0 string, _param1 interface{}) error {
+	ret := _m.ctrl.Call(_m, "InjectFromID", _param0, _param1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-func (_mr *_MockLoaderRecorder) InjectFromId(arg0, arg1 interface{}) *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "InjectFromId", arg0, arg1)
+func (_mr *_MockLoaderRecorder) InjectFromID(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "InjectFromID", arg0, arg1)
 }
 
 func (_m *MockLoader) IsInACloudEnv() bool {

@@ -2,7 +2,7 @@ package schema
 
 import "github.com/cloudfoundry-community/gautocloud/decoder"
 
-type MongoDbSchema struct {
+type MongoDBSchema struct {
 	Uri      decoder.ServiceUri `cloud:"ur(i|l),regex"`
 	Database string             `cloud:"(database|db),regex"`
 	Port     int                `cloud-default:"27017"`

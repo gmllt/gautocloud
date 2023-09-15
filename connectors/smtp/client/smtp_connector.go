@@ -3,14 +3,15 @@ package client
 import (
 	"crypto/tls"
 	"errors"
-	"github.com/cloudfoundry-community/gautocloud"
-	"github.com/cloudfoundry-community/gautocloud/connectors"
-	"github.com/cloudfoundry-community/gautocloud/connectors/smtp/raw"
-	"github.com/cloudfoundry-community/gautocloud/connectors/smtp/smtptype"
 	"net"
 	"net/smtp"
 	"strconv"
 	"time"
+
+	"github.com/cloudfoundry-community/gautocloud"
+	"github.com/cloudfoundry-community/gautocloud/connectors"
+	"github.com/cloudfoundry-community/gautocloud/connectors/smtp/raw"
+	"github.com/cloudfoundry-community/gautocloud/connectors/smtp/smtptype"
 )
 
 func init() {
@@ -61,18 +62,18 @@ func (c SmtpConnector) GetSmtp(schema smtptype.Smtp, withAuth bool, isTls bool, 
 	if isTls && startTls && withAuth {
 		err = client.StartTLS(tlsconfig)
 		if err != nil {
-			client.Close()
-			client.Quit()
-			conn.Close()
+			_ = client.Close()
+			_ = client.Quit()
+			_ = conn.Close()
 			return client, err
 		}
 	}
 	if withAuth {
 		err = client.Auth(c.GetAuth(schema))
 		if err != nil {
-			client.Close()
-			client.Quit()
-			conn.Close()
+			_ = client.Close()
+			_ = client.Quit()
+			_ = conn.Close()
 			return client, err
 		}
 	}
@@ -104,7 +105,6 @@ func (c SmtpConnector) Load(schema interface{}) (interface{}, error) {
 		return nil, errors.New("No smtp are reachable (trying: tls with starttls, tls, plain auth and no auth):\n" + errorMessage)
 	}
 	return client, nil
-
 }
 func (c SmtpConnector) Schema() interface{} {
 	return c.wrapConn.Schema()

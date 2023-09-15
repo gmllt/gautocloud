@@ -1,8 +1,9 @@
 package cloudenv
 
 import (
-	"github.com/cloudfoundry-community/go-cfenv"
 	"os"
+
+	"github.com/cloudfoundry-community/go-cfenv"
 )
 
 type CfCloudEnv struct {
@@ -11,7 +12,6 @@ type CfCloudEnv struct {
 
 func NewCfCloudEnv() CloudEnv {
 	return &CfCloudEnv{}
-
 }
 func NewCfCloudEnvWithAppEnv(appEnv *cfenv.App) CloudEnv {
 	return &CfCloudEnv{
@@ -44,7 +44,7 @@ func (c CfCloudEnv) convertCfServices(cfServices []cfenv.Service) []Service {
 	}
 	return services
 }
-func (c CfCloudEnv) initAppEnv() error {
+func (c CfCloudEnv) InitAppEnv() error {
 	if !c.IsInCloudEnv() {
 		return nil
 	}
@@ -77,10 +77,7 @@ func (c CfCloudEnv) GetServicesFromName(name string) []Service {
 	return c.convertCfServices(servicesFound)
 }
 func (c CfCloudEnv) IsInCloudEnv() bool {
-	if os.Getenv("VCAP_APPLICATION") != "" {
-		return true
-	}
-	return false
+	return os.Getenv("VCAP_APPLICATION") != ""
 }
 func (c CfCloudEnv) GetAppInfo() AppInfo {
 	return AppInfo{

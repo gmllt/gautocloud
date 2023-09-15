@@ -2,10 +2,11 @@ package arg_test
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/cloudfoundry-community/gautocloud"
 	"github.com/cloudfoundry-community/gautocloud/connectors/generic"
 	. "github.com/cloudfoundry-community/gautocloud/interceptor/cli/arg"
-	"os"
 )
 
 func Example() {

@@ -2,9 +2,10 @@ package interceptor_test
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/cloudfoundry-community/gautocloud"
 	"github.com/cloudfoundry-community/gautocloud/connectors/generic"
-	"os"
 )
 
 func init() {

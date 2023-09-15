@@ -3,9 +3,10 @@ package cloudenv_test
 import (
 	. "github.com/cloudfoundry-community/gautocloud/cloudenv"
 
+	"os"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"os"
 )
 
 var _ = Describe("KubernetesCloudenv", func() {

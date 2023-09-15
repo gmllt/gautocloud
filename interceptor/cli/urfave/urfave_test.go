@@ -61,7 +61,7 @@ var _ = Describe("Urfave", func() {
 				},
 			}
 
-			app.Run([]string{"app", "--foo=bar", "doo", "--foo-bar"})
+			_ = app.Run([]string{"app", "--foo=bar", "doo", "--foo-bar"})
 
 			Expect(ran).To(BeTrue())
 		})
@@ -99,7 +99,7 @@ var _ = Describe("Urfave", func() {
 				},
 			}
 
-			app.Run([]string{"app", "doo"})
+			_ = app.Run([]string{"app", "doo"})
 
 			Expect(ran).To(BeTrue())
 		})
@@ -145,7 +145,7 @@ var _ = Describe("Urfave", func() {
 				},
 			}
 
-			app.Run([]string{"app", "--foo=bar", "doo", "--foo-bar"})
+			_ = app.Run([]string{"app", "--foo=bar", "doo", "--foo-bar"})
 
 			Expect(ran).To(BeTrue())
 		})

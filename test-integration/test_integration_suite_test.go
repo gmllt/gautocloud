@@ -4,13 +4,12 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"testing"
-	"os"
 	"fmt"
+	"os"
+	"testing"
 )
 
 func TestTestIntegration(t *testing.T) {
-
 	RegisterFailHandler(Fail)
 	if os.Getenv("GAUTOCLOUD_HOST_SERVICES") == "" {
 		fmt.Println("Integration tests skipped, you need to set env var " +

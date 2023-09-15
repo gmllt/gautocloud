@@ -158,11 +158,11 @@ var _ = Describe("Connectors integration", func() {
 		})
 		Context("gorm", func() {
 			It("should inject a gorm DB when user request it", func() {
-				var gormDb *gorm.DB
-				err := gautocloud.InjectFromId(gmysql.GormMysqlConnector{}.Id(), &gormDb)
+				var gormDB *gorm.DB
+				err := gautocloud.InjectFromId(gmysql.GormMysqlConnector{}.Id(), &gormDB)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(gormDb).ShouldNot(BeNil())
-				Expect(gormDb.Dialect().GetName()).Should(Equal("mysql"))
+				Expect(gormDB).ShouldNot(BeNil())
+				Expect(gormDB.Dialect().GetName()).Should(Equal("mysql"))
 			})
 		})
 	})
@@ -225,11 +225,11 @@ var _ = Describe("Connectors integration", func() {
 		})
 		Context("gorm", func() {
 			It("should inject a gorm DB when user request it", func() {
-				var gormDb *gorm.DB
-				err := gautocloud.InjectFromId(gpostgres.GormPostgresqlConnector{}.Id(), &gormDb)
+				var gormDB *gorm.DB
+				err := gautocloud.InjectFromId(gpostgres.GormPostgresqlConnector{}.Id(), &gormDB)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(gormDb).ShouldNot(BeNil())
-				Expect(gormDb.Dialect().GetName()).Should(Equal("postgres"))
+				Expect(gormDB).ShouldNot(BeNil())
+				Expect(gormDB.Dialect().GetName()).Should(Equal("postgres"))
 			})
 		})
 	})
@@ -286,10 +286,10 @@ var _ = Describe("Connectors integration", func() {
 		})
 		Context("gorm", func() {
 			It("should inject a gorm DB when user request it", func() {
-				var gormDb *gorm.DB
-				err := gautocloud.InjectFromId(gmssql.GormMssqlConnector{}.Id(), &gormDb)
+				var gormDB *gorm.DB
+				err := gautocloud.InjectFromId(gmssql.GormMssqlConnector{}.Id(), &gormDB)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(gormDb).ShouldNot(BeNil())
+				Expect(gormDB).ShouldNot(BeNil())
 			})
 		})
 	})
@@ -637,6 +637,7 @@ var _ = Describe("Connectors integration", func() {
 					err = svc.Put("myfile.txt", []byte("data"), "", s3.PublicRead, s3.Options{})
 					Expect(err).ToNot(HaveOccurred())
 					b, err := svc.Get("myfile.txt")
+					Expect(err).ToNot(HaveOccurred())
 					Expect(string(b)).Should(Equal("data"))
 					err = svc.Del("myfile.txt")
 					Expect(err).ToNot(HaveOccurred())
@@ -651,6 +652,7 @@ var _ = Describe("Connectors integration", func() {
 					err = svc.Put("myfile.txt", []byte("data"), "", s3.PublicRead, s3.Options{})
 					Expect(err).ToNot(HaveOccurred())
 					b, err := svc.Get("myfile.txt")
+					Expect(err).ToNot(HaveOccurred())
 					Expect(string(b)).Should(Equal("data"))
 					err = svc.Del("myfile.txt")
 					Expect(err).ToNot(HaveOccurred())
@@ -663,6 +665,7 @@ var _ = Describe("Connectors integration", func() {
 					err = svc.Put("myfile.txt", []byte("data"), "", s3.PublicRead, s3.Options{})
 					Expect(err).ToNot(HaveOccurred())
 					b, err := svc.Get("myfile.txt")
+					Expect(err).ToNot(HaveOccurred())
 					Expect(string(b)).Should(Equal("data"))
 					err = svc.Del("myfile.txt")
 					Expect(err).ToNot(HaveOccurred())
@@ -677,6 +680,7 @@ var _ = Describe("Connectors integration", func() {
 					err = svc.Put("myfile.txt", []byte("data"), "", s3.PublicRead, s3.Options{})
 					Expect(err).ToNot(HaveOccurred())
 					b, err := svc.Get("myfile.txt")
+					Expect(err).ToNot(HaveOccurred())
 					Expect(string(b)).Should(Equal("data"))
 					err = svc.Del("myfile.txt")
 					Expect(err).ToNot(HaveOccurred())
@@ -692,6 +696,7 @@ var _ = Describe("Connectors integration", func() {
 					err = svc.Put("myfile.txt", []byte("data"), "", s3.PublicRead, s3.Options{})
 					Expect(err).ToNot(HaveOccurred())
 					b, err := svc.Get("myfile.txt")
+					Expect(err).ToNot(HaveOccurred())
 					Expect(string(b)).Should(Equal("data"))
 					err = svc.Del("myfile.txt")
 					Expect(err).ToNot(HaveOccurred())
@@ -706,6 +711,7 @@ var _ = Describe("Connectors integration", func() {
 					err = svc.Put("myfile.txt", []byte("data"), "", s3.PublicRead, s3.Options{})
 					Expect(err).ToNot(HaveOccurred())
 					b, err := svc.Get("myfile.txt")
+					Expect(err).ToNot(HaveOccurred())
 					Expect(string(b)).Should(Equal("data"))
 					err = svc.Del("myfile.txt")
 					Expect(err).ToNot(HaveOccurred())

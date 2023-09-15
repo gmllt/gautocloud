@@ -3,10 +3,11 @@ package cloudenv_test
 import (
 	. "github.com/cloudfoundry-community/gautocloud/cloudenv"
 
+	"os"
+
 	"github.com/cloudfoundry-community/go-cfenv"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"os"
 )
 
 var _ = Describe("CfCloudenv", func() {
@@ -34,7 +35,7 @@ var _ = Describe("CfCloudenv", func() {
 			services := cloudEnv.GetServicesFromTags([]string{"postgres.*"})
 			Expect(services).Should(HaveLen(1))
 		})
-		It("should give correct service(s) when have mulitple tag", func() {
+		It("should give correct service(s) when have multiple tag", func() {
 			services := cloudEnv.GetServicesFromTags([]string{"postgresql", "smtp"})
 			Expect(services).Should(HaveLen(2))
 		})

@@ -3,7 +3,7 @@ package generic
 import (
 	"github.com/cloudfoundry-community/gautocloud/connectors"
 	"github.com/cloudfoundry-community/gautocloud/interceptor"
-	"github.com/satori/go.uuid"
+	uuid "github.com/satori/go.uuid"
 )
 
 type ConfigGenericConnector struct {
